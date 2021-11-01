@@ -16,7 +16,9 @@ class PremiereAnnee:
         if self.os_type == "Darwin":
             commande = "say " + string
         elif self.os_type == "Linux":
-            commande = "espeak -vfr+f2 \"" + string + "\""
+            #commande = "espeak -vfr+f2 \"" + string + "\""
+            commande = "espeak-ng -s 125 -vmb/mb-fr1 \"" + string + "\""
+
         os.system(commande)
 
     def question(self, question):
