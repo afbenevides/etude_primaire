@@ -1,5 +1,5 @@
 sudo apt update
-sudo apt install espeak -y
+sudo apt install espeak-ng -y
 mkdir /home/pi/espeak
 cd /home/pi/espeak
 wget https://raspberry-pi.fr/download/espeak/mbrola3.0.1h_armhf.deb -O mbrola.deb
