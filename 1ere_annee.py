@@ -36,6 +36,32 @@ class PremiereAnnee:
         bonjour = "bonjour" + self.nom
         self.dire(bonjour)
 
+    def quitter(self):
+        fin = "Beau travail " + self.nom + " et à la prochaine!"
+        print(fin)
+        self.dire(fin)
+        time.sleep(1)
+        exit()
+
+    def valider_action(self, touche):
+        if touche != "q":
+            return True
+        else:
+            return False
+
+    def donner_reponse(self, type_reponse, reponse):
+        touche = self.question_reponse("\"Enter\" pour continuer ou \"q\" pour quittter")
+        if self.valider_action(touche):
+            self.dire("le {0} était".format(type_reponse))
+            self.dire(reponse)
+            touche = self.question_reponse("\"Enter\" pour continuer ou \"q\" pour quittter")
+            if self.valider_action(touche):
+                return True
+            else:
+                return self.quitter()
+        else:
+            return self.quitter()
+
 class MotsEtiquettes(PremiereAnnee):
     def __init__(self, nom):
         super().__init__()
@@ -181,35 +207,46 @@ class MotsEtiquettes(PremiereAnnee):
         while sortie:
             sortie = self.lire_un_mot_etiquette()
 
-    def quitter(self):
-        fin = "Beau travail " + self.nom + " et à la prochaine!"
-        print(fin)
-        self.dire(fin)
-        time.sleep(1)
-        return False
-
-    def valider_action(self, touche):
-        if touche != "q":
-            return True
-        else:
-            return False
-
     def lire_un_mot_etiquette(self):
         mot = self.choix_hasard(self.liste_de_mots, 0, len(self.liste_de_mots) - 1)
         self.question("{0} quel est ce mot ?".format(self.nom))
         print("====> \033[92m {0} \033[0m <====".format(mot))
-        touche = self.question_reponse("\"Enter\" pour continuer ou \"q\" pour quittter")
-        if self.valider_action(touche):
-            self.dire("le mot était")
-            self.dire(mot)
-            touche = self.question_reponse("\"Enter\" pour continuer ou \"q\" pour quittter")
-            if self.valider_action(touche):
-                return True
-            else:
-                return self.quitter()
-        else:
-            return self.quitter()
+        return self.donner_reponse("mot", mot)
+        #
+        # touche = self.question_reponse("\"Enter\" pour continuer ou \"q\" pour quittter")
+        # if self.valider_action(touche):
+        #     self.dire("le mot était")
+        #     self.dire(mot)
+        #     touche = self.question_reponse("\"Enter\" pour continuer ou \"q\" pour quittter")
+        #     if self.valider_action(touche):
+        #         return True
+        #     else:
+        #         return self.quitter()
+        # else:
+        #     return self.quitter()
 
+class Nombres_aleatoires(PremiereAnnee):
+    def __init__(self, nom):
+        super().__init__()
+        self.nom = nom
+
+        # variable du nombre minimum
+        question = "À partir de quel nombre veux-tu pratiquer ta lecture des nombres?"
+        minimum = int(self.question_reponse(question))
+
+        # variable du nombre maximal
+        question = "Jusqu\\'à quel nombre veux-tu pratiquer ta lecture des nombres?"
+        maximum = int(self.question_reponse(question))
+
+        print(minimum, maximum)
+        commentaire = "Nombre entre " + str(minimum) + " et " + str(maximum)
+        self.dire(commentaire)
+        sortie = True
+        while sortie:
+            nombre = random.randint(minimum, maximum)
+            self.question("{0} quel est ce nombre ?".format(self.nom))
+            print("====> \033[92m {0} \033[0m <====".format(nombre))
+            sortie = self.donner_reponse("nombre", str(nombre))
 
 
 #programme = MotsEtiquettes()
@@ -223,4 +260,4 @@ reponse = programme.question_reponse(question)
 if reponse == "A":
     MotsEtiquettes(programme.nom)
 elif reponse == "B":
-    Nombres_aleatoires()
+    Nombres_aleatoires(programme.nom)
