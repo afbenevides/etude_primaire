@@ -10,10 +10,6 @@ class PremiereAnnee:
             question = "Cet Os n\\'est pas encore supporté, désolé!"
             self.question(question)
             exit()
-        question = "Quel est ton prénom?"
-        self.nom = self.question_reponse(question)
-        bonjour = "bonjour" + self.nom
-        self.dire(bonjour)
 
     def dire(self, string):
         commande = ""
@@ -34,11 +30,16 @@ class PremiereAnnee:
     def choix_hasard(self, possibilites, minimum, maximum):
         return possibilites[random.randint(minimum, maximum)]
 
+    def demander_nom(self):
+        question = "Quel est ton prénom?"
+        self.nom = self.question_reponse(question)
+        bonjour = "bonjour" + self.nom
+        self.dire(bonjour)
 
 class MotsEtiquettes(PremiereAnnee):
-    def __init__(self):
+    def __init__(self, nom):
         super().__init__()
-
+        self.nom = nom
         self.dictionnaire_list = dict()
 
         #####################
@@ -197,11 +198,11 @@ class MotsEtiquettes(PremiereAnnee):
         mot = self.choix_hasard(self.liste_de_mots, 0, len(self.liste_de_mots) - 1)
         self.question("{0} quel est ce mot ?".format(self.nom))
         print("====> \033[92m {0} \033[0m <====".format(mot))
-        touche = self.question_reponse("Continuer ou \"q\" pour quittter")
+        touche = self.question_reponse("\"Enter\" pour continuer ou \"q\" pour quittter")
         if self.valider_action(touche):
             self.dire("le mot était")
             self.dire(mot)
-            touche = self.question_reponse("Continuer ou \"q\" pour quittter")
+            touche = self.question_reponse("\"Enter\" pour continuer ou \"q\" pour quittter")
             if self.valider_action(touche):
                 return True
             else:
@@ -211,4 +212,15 @@ class MotsEtiquettes(PremiereAnnee):
 
 
 
-programme = MotsEtiquettes()
+#programme = MotsEtiquettes()
+programme = PremiereAnnee()
+programme.demander_nom()
+
+print("A - Mots étiquettes")
+print("B - Nombres Aléatoires")
+question = "Quelle activité veux-tu faire? "
+reponse = programme.question_reponse(question)
+if reponse == "A":
+    MotsEtiquettes(programme.nom)
+elif reponse == "B":
+    Nombres_aleatoires()
