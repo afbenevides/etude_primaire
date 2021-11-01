@@ -5,16 +5,22 @@ import random
 
 class PremiereAnnee:
     def __init__(self):
+        self.os_type = str(os.uname().sysname)
+        print(self.os_type)
+        print(self.os_type == "Darwin")
+        if self.os_type != "Darwin" and self.os_type != "Linux":
+            print("Cet Os n'est pas encore supporté, désolé!")
         question = "Quel est ton prénom?"
         self.nom = self.question_reponse(question)
         bonjour = "bonjour" + self.nom
         self.dire(bonjour)
 
     def dire(self, string):
-        #commande = "say " + string
-        commande = "espeak -vfr+f2 \"" + string + "\""
-
-
+        commande = ""
+        if self.os_type == "Darwin":
+            commande = "say " + string
+        elif self.os_type == "Linux":
+            commande = "espeak -vfr+f2 \"" + string + "\""
         os.system(commande)
 
     def question(self, question):
@@ -202,6 +208,7 @@ class MotsEtiquettes(PremiereAnnee):
                 return self.quitter()
         else:
             return self.quitter()
+
 
 
 programme = MotsEtiquettes()
