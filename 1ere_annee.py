@@ -11,7 +11,10 @@ class PremiereAnnee:
         self.dire(bonjour)
 
     def dire(self, string):
-        commande = "say " + string
+        #commande = "say " + string
+        commande = "espeak -vfr+f2 \"" + string + "\""
+
+
         os.system(commande)
 
     def question(self, question):
@@ -166,13 +169,17 @@ class MotsEtiquettes(PremiereAnnee):
         print(nombre_mots)
         self.dire(nombre_mots)
         time.sleep(1)
-        self.lire_un_mot_etiquette()
+
+        sortie = True
+        while sortie:
+            sortie = self.lire_un_mot_etiquette()
 
     def quitter(self):
         fin = "Beau travail " + self.nom + " et à la prochaine!"
         print(fin)
         self.dire(fin)
         time.sleep(1)
+        return False
 
     def valider_action(self, touche):
         if touche != "q":
@@ -184,17 +191,17 @@ class MotsEtiquettes(PremiereAnnee):
         mot = self.choix_hasard(self.liste_de_mots, 0, len(self.liste_de_mots) - 1)
         self.question("{0} quel est ce mot ?".format(self.nom))
         print("====> \033[92m {0} \033[0m <====".format(mot))
-        touche = self.question_reponse("Presser n\'importe quelle touche pour entendre le mot ou  \"q\" pour quittter")
+        touche = self.question_reponse("Continuer ou \"q\" pour quittter")
         if self.valider_action(touche):
             self.dire("le mot était")
             self.dire(mot)
-            touche = self.question_reponse("Presser n\'importe quelle touche pour continuer ou  \"q\" pour quittter")
+            touche = self.question_reponse("Continuer ou \"q\" pour quittter")
             if self.valider_action(touche):
-                pass
+                return True
             else:
-                self.quitter()
+                return self.quitter()
         else:
-            self.quitter()
+            return self.quitter()
 
 
 programme = MotsEtiquettes()
