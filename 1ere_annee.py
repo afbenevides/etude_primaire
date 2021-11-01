@@ -6,10 +6,10 @@ import random
 class PremiereAnnee:
     def __init__(self):
         self.os_type = str(os.uname().sysname)
-        print(self.os_type)
-        print(self.os_type == "Darwin")
         if self.os_type != "Darwin" and self.os_type != "Linux":
-            print("Cet Os n'est pas encore supporté, désolé!")
+            question = "Cet Os n\\'est pas encore supporté, désolé!"
+            self.question(question)
+            exit()
         question = "Quel est ton prénom?"
         self.nom = self.question_reponse(question)
         bonjour = "bonjour" + self.nom
