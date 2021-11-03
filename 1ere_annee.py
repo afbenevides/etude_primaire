@@ -259,7 +259,11 @@ print("A - Mots étiquettes")
 print("B - Nombres Aléatoires")
 question = "Quelle activité veux-tu faire? "
 reponse = programme.question_reponse(question)
-if reponse == "A":
+
+if reponse.upper() == "A":
     MotsEtiquettes(programme.nom)
-elif reponse == "B":
+elif reponse.upper() == "B":
     Nombres_aleatoires(programme.nom)
+else:
+    question = ("Désolé, votre choix est non valide")
+    programme.question(question)
