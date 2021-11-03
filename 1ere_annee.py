@@ -407,13 +407,42 @@ class Dictee(PremiereAnnee):
         self.dire(mot)
         return self.afficher_reponse("mot", mot)
 
+class Dictee_nombres_aleatoires(PremiereAnnee):
+    def __init__(self, nom):
+        super().__init__()
+        self.nom = nom
+
+        # variable du nombre minimum
+        question = "À partir de quel nombre veux-tu pratiquer ta dictée des nombres?"
+        minimum = int(self.question_reponse(question))
+
+        # variable du nombre maximal
+        question = "Jusqu\\'à quel nombre veux-tu pratiquer ta dictée des nombres?"
+        maximum = int(self.question_reponse(question))
+
+        print(minimum, maximum)
+        commentaire = "Nombre entre " + str(minimum) + " et " + str(maximum)
+        self.dire(commentaire)
+        sortie = True
+        while sortie:
+            nombre = random.randint(minimum, maximum)
+            self.question("{0} écrit le nombre: ".format(self.nom))
+            time.sleep(0.5)
+            self.dire(str(nombre))
+            time.sleep(2)
+            self.dire(str(nombre))
+            time.sleep(2)
+            self.dire(str(nombre))
+            sortie = self.afficher_reponse("nombre", str(nombre))
+
 #programme = MotsEtiquettes()
 programme = PremiereAnnee()
 programme.demander_nom()
 
 print("A - Mots étiquettes")
-print("B - Nombres Aléatoires")
+print("B - Nombres aléatoires")
 print("C - Dictée")
+print("D - Dictée de nombres aléatoires")
 question = "Quelle activité veux-tu faire? "
 reponse = programme.question_reponse(question)
 
@@ -423,6 +452,8 @@ elif reponse.upper() == "B":
     Nombres_aleatoires(programme.nom)
 elif reponse.upper() == "C":
     Dictee(programme.nom)
+elif reponse.upper() == "D":
+    Dictee_nombres_aleatoires(programme.nom)
 else:
     question = ("Désolé, votre choix est non valide")
     programme.question(question)
