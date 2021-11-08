@@ -171,6 +171,31 @@ class MotsEtiquettes(PremiereAnnee):
                         "unes",
                         "leurs",
                         "mes"]
+        self.liste_1 = ["le",
+                        "il",
+                        "écris",
+                        "pour",
+                        "que",
+                        "les",
+                        "a",
+                        "l'",
+                        "qui",
+                        "son",
+                        "de",
+                        "en",
+                        "une",
+                        "entoure",
+                        "je",
+                        "la",
+                        "et",
+                        "des",
+                        "chaque",
+                        "du",
+                        "un",
+                        "est",
+                        "dans",
+                        "au",
+                        "tu"]
 
         self.dictionnaire_list["A"] = self.liste_A
         self.dictionnaire_list["B"] = self.liste_B
@@ -181,6 +206,8 @@ class MotsEtiquettes(PremiereAnnee):
         self.dictionnaire_list["G"] = self.liste_G
         self.dictionnaire_list["H"] = self.liste_H
         self.dictionnaire_list["I"] = self.liste_I
+        self.dictionnaire_list["1"] = self.liste_1
+
         print("=======================================================================================================")
         parole = "Les listes disponibles sont:"
         print(parole)
@@ -197,12 +224,13 @@ class MotsEtiquettes(PremiereAnnee):
 
         self.valids = list()
         for character in listes.upper():
-            if character.isalpha():
+            if character.isalnum():
                 if character in self.dictionnaire_list.keys():
                     self.valids.append(character)
                 else:
                     print("La liste", character, "n\'existe pas")
                     exit()
+
         for each in self.valids:
             print(str(each))
             self.dire(str(each))
